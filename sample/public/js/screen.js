@@ -59,7 +59,7 @@ window.onload = function() {
         this.load.image("plateau", "Assets/plateau.png");
         this.load.image("ground", "Assets/ground.png");
         this.load.image("plants", "Assets/plant.png");
-        this.load.image("bird", "Assets/bird.png");
+        this.load.image("bird", "Assets/javascript1.png");
         this.load.image("bird2", "Assets/bird2.png");
         this.load.image("bird3", "Assets/bird3.png");
         this.load.image("bird4", "Assets/bird4.png");
@@ -92,7 +92,7 @@ window.onload = function() {
 
 
 
-        bird = this.add.image(810, 130, 'bird').setScrollFactor(0);
+        bird = this.add.image(900, 150, 'bird').setScrollFactor(0);
 
         light = this.add.image(100, 700, 'light').setScrollFactor(0.2);
 
@@ -102,15 +102,15 @@ window.onload = function() {
         createAligned(this, 100, 'plants', 1.25)
         this.cameras.main.setBounds(0, 0, width * 100, height);
 
-        one = this.add.text(420, 95, "Type GO", {
+        one = this.add.text(120, 95, "Interactive Views", {
             font: "100px Luminari, fantasy",
-            fill: "#DA70D6",
+            fill: "#483D8B",
             align: "center"
         }).setScrollFactor(0);
 
-        two = this.add.text(360, 200, "Typing Multi-player", {
+        two = this.add.text(360, 200, "Javascript", {
             font: "50px Luminari, fantasy",
-            fill: "#DA70D6",
+            fill: "#483D8B",
             align: "center"
         }).setScrollFactor(0);
 
@@ -120,24 +120,24 @@ window.onload = function() {
             align: "center"
         }).setScrollFactor(0);
 
-        four = this.add.text(764, 200, "Game", {
+        four = this.add.text(580, 200, "Projects", {
             font: "50px Luminari, fantasy",
             fill: "#000000",
             align: "center"
         }).setScrollFactor(0);
 
-        five = this.add.text(400, 400, "Time", {
+        five = this.add.text(200, 400, "Time", {
             font: "50px Luminari, fantasy",
             fill: "#000000",
             align: "center"
         }).setScrollFactor(0);
-        six = this.add.text(510, 400, "to kill the", {
+        six = this.add.text(320, 400, "to Understand the", {
             font: "50px Luminari, fantasy",
-            fill: "#DA70D6",
+            fill: "#483D8B",
             align: "center"
         }).setScrollFactor(0);
 
-        seven = this.add.text(710, 400, "keypad", {
+        seven = this.add.text(700, 400, "Data Structures", {
             font: "50px Luminari, fantasy",
             fill: "#000000",
             align: "center"

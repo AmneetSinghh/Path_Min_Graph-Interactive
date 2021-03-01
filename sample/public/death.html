@@ -1,8 +1,17 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 
 <head>
-    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://kit.fontawesome.com/5548f5ed00.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
@@ -20,221 +29,62 @@
     <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
-
-    <style>
-        body,
-        .quote-input {
-            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-        }
-        
-        .ac {
-            font-family: cursive;
-        }
-        
-        .container {
-            background-color: #f4b6ff;
-            padding: 1rem;
-            border-radius: .5rem;
-            width: 100%;
-            max-width: 96%;
-        }
-        
-        .quote-display {
-            margin-bottom: 1rem;
-            font-size: 20px;
-            margin-left: calc(1rem + 2px);
-            margin-right: calc(1rem + 2px);
-        }
-        
-        .quote-input {
-            background-color: transparent;
-            border: 2px solid #f4b6ff;
-            outline: none;
-            width: 100%;
-            height: 8rem;
-            margin: auto;
-            resize: none;
-            font-size: 20px;
-            padding: .5rem 1rem;
-            border-radius: .5rem;
-        }
-        
-        .quote-input:focus {
-            border-color: black;
-        }
-        
-        .correct {
-            color: green;
-        }
-        
-        .timer {
-            color: green;
-        }
-        
-        .temp {
-            font-family: 'impact';
-        }
-        
-        .incorrect {
-            color: red;
-            text-decoration: underline;
-        }
-        
-        html {
-            min-height: 100%;
-            position: relative;
-        }
-        
-        .container-fluid {
-            padding-top: 70px;
-            padding-bottom: 70px;
-        }
-        
-        .navbar {
-            padding-top: 15px;
-            padding-bottom: 15px;
-            border: 0;
-            border-radius: 0;
-            margin-bottom: 0;
-            font-size: 12px;
-            letter-spacing: 5px;
-        }
-        
-        .navbar-nav li a:hover {
-            color: #1abc9c !important;
-        }
-        
-        .footer-padding {
-            padding-bottom: 60px;
-        }
-        
-        .footer {
-            position: absolute;
-            text-align: center;
-            bottom: 0;
-            width: 100%;
-            height: 60px;
-            background-color: #1abc9c;
-        }
-        
-        .footer p {
-            margin-top: 25px;
-            font-size: 12px;
-            color: #fff;
-        }
-        
-        .type_of {
-            background-color: #f4b6ff;
-            /* Green */
-            border: none;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 100%;
-        }
-        /* Green */
-        
-        .type_of {
-            border-color: #4CAF50;
-            color: white;
-        }
-        
-        .type_of:hover {
-            background-color: #9900CC;
-            color: white;
-        }
-        
-        #ready {
-            color: #4CAF50;
-            font-size: 20px;
-            text-align: center;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-        }
-        
-        #timer {
-            color: #4CAF50;
-        }
-        
-        #death {
-            color: #800000;
-        }
-    </style>
-
+    <link rel="stylesheet" href="style1.css">
+    <link rel="stylesheet" href="style2.css">
+    <script src="Trie.js"></script>
+    <script type="module" src="script.js"></script>
 </head>
 
 <body>
-    <script async src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <nav class="navbar navbar-light " style="font-size: 25px; font-family: sans-serif; background-color: whitesmoke;">
 
-    <script src="//cdn.jsdelivr.net/npm/phaser@3.52.0/dist/phaser.min.js"></script>
-    <script src="js/death.js" defer></script>
-    <nav class="navbar navbar-light " style="font-size: 20px; font-family: sans-serif; background-color: whitesmoke; text-align: left;">
-        <p style="font-family: 'Kaushan Script', cursive; padding:0px; margin: 0%;"> Type Go ❤</p>
+        Auto-Complete Widget
     </nav>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6" style="background-color:lavender;">
-                <div id="mynetwork">
-
-
+    <div id="container">
+        <div class="text_box" style="display: flex">
+            <form autocomplete="off" style="margin: auto">
+                <h5>Type in the box below...</h5>
+                <br>
+                <div class="autocomplete" style="width:350px;">
+                    <input id="myInput" type="text" placeholder="Search Number...">
+                    <!--<a class="ks-items autocomplete-items" id="list"></a>-->
                 </div>
-
-            </div>
-
-            <div class="col-lg-6" style="background-color:lavenderblush;">
-
-
-
-
-                <div class="w3-panel w3-card-4">
-                    <h1 class="temp"><span id="camp"></span>
-                        <button class="type_of" id="fifty">Start Game</button>
-                        <span id="Timer"></span></h1>
-                </div>
-                <hr>
-                <div class="w3-panel w3-card-4">
-
-                    <div class="quote-display" id="quoteDisplay"></div>
-                    <textarea id="quoteInput" class="quote-input" autofocus onkeydown="func(event)" , disabled></textarea>
-                    <hr>
-                </div>
-                <p id="ready"> <span id="under_ready">If you type the Wrong characters in  <span id="death">Death-Race</span>, Your game'll be over.</span> <span id="timer1"></span> </p>
-
-                <hr>
-
-                <div class="container mt-3 ">
-
-                    <div class="row ">
-
-                        <div class="col-md-12 ">
-                            <hr>
-
-                            <p class="ac ">Accuracy❤:<span id="Accuracy">0</span></p>
-                            <p class="ac ">WPM❤: <span id="WPM">0</span></p>
-
-                            <button class="btn btn-warning" id="restart"> Restart </button>
-                            <a href="/single"> <button class="btn btn-warning" id="restart"> Singlemode </button></a>
-                            <a href="/multiplayer"> <button class="btn btn-warning" id="restart"> Play with friends </button></a>
-                            <a href="/"><button class="btn btn-warning" id="restart"> Go back to Menu </button></a>
-                            <hr>
-                        </div>
-                    </div>
-
-                </div>
-                <hr>
-
-            </div>
-
+                <input type="submit" value="Cancel">
+            </form>
+        </div>
+        <div class="text_box" style="overflow-y: scroll">
+            <span id="info">
+            </span>
         </div>
     </div>
+    <div class="center_input">
+        <input type="text" placeholder="Enter contact name, number" id="contact_input">
+        <button class="btn btn-success" id="add">Add Contact</button>
+    </div>
+    <div class="center_input">
+        <input type="text" placeholder="Enter contact number" id="delete_input">
+        <button class="btn btn-danger" id="del">Delete Contact</button>
+    </div>
+
+    <template>
+        <div class="list-group-item list-group-item-action" style="display: inline-flex">
+            <span class="ks-avatar" style="align-content: center">
+                <img src="./person.png" id="Image" style="margin: 10px; height: 40px; width: 40px">
+            </span>
+            <div>
+                <span id="Name">Eric George</span>
+                <br>
+                <span id="Number">just now</span>
+            </div>
+        </div>
+    </template>
     <br>
-    <nav class="navbar navbar-light " style="font-size: 20px; font-family: sans-serif; background-color: whitesmoke; text-align: left; ">
-        <p style="font-family: 'Kaushan Script', cursive; padding:0px; margin: 0%; "> Made by ❤Harry Singh</p>
-    </nav>
+    <p id="format"><span id="Note">NOTE </span>: Correct Format of Number is 6 digits</p>
+    <a href="/death"> <button class="btn btn-warning" id="restart"> Restart❤ </button></a>
+    <a href="/single"> <button class="btn btn-warning" id="restart"> Min Path (Graph)❤ </button></a>
+    <a href="/multiplayer"><button class="btn btn-warning" id="restart"> Min Jumps (DP)❤ </button></a>
+    <a href="/"><button class="btn btn-warning" id="restart"> Menu❤ </button></a>
+
 </body>
 
 </html>

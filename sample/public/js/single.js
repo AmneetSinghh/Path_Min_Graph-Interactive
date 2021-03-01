@@ -1,663 +1,225 @@
-// // for the backspacing thing. problem.
-
-let word_or_not = false;
-let last_char = " ";
-let cur_char = " ";
-let last_correct = 0;
-let current_now = 0;
-let current_click = 0;
-let into_lenght = 0;
-let your_wish = 100;
-let cccc = false;
-let space_back = 0;
-let temp_string = "";
-
-const func = e => {
-    if (e.keyCode == 8) {
-        console.log("Working!  ->", last_correct, current_now);
-        space_back += 0.34;
-
-        if (last_correct == 0) {
-            console.log("spacr not")
-
-        } else if (last_correct >= current_now - 1) {
-            console.log("noBackspaceallowed\n");
-            e.preventDefault();
-        } else {
-            console.log("spacr not")
-
-        }
-    } else {
-        console.log(last_char, "-> Key");
-    }
-}
-
-
-window.onload = function() {
-
-
-    let time = 0;
-    //    let  correct_characters=0;
-    let total_words = 0;
-    let len_of_text = 0;
-    let i = 0;
-    let pre = 0;
-    let indd = 0;
-    let speed = 1;
-    let moves = 0;
-    let now = 0;
-    let moves_width = 0;
-    let start_min = 1;
-    let time_ = start_min * 60;
-    let time_1 = 10;
-    const RANDOM_QUOTE_API_URL = 'http://api.quotable.io/random';
-    const quoteDisplayElement = document.getElementById('quoteDisplay');
-    const quoteInputElement = document.getElementById('quoteInput')
-    const eighty = document.getElementById('eighty');
-    const ninety = document.getElementById('ninety');
-    const fifty = document.getElementById('fifty');
-    const sixty = document.getElementById('sixty');
-    const seventy = document.getElementById('seventy');
-    const hundred = document.getElementById('hundred');
-    const hundred120 = document.getElementById('hundred120');
-    const hundred150 = document.getElementById('hundred150');
-    const ready = document.getElementById('ready');
-    const restart = document.getElementById('restart');
-    const under_ready = document.getElementById('under_ready');
-    const timer = document.getElementById('Timer');
-    const timer1 = document.getElementById('timer1');
-    const Accuracy = document.getElementById('Accuracy');
-    const WPM = document.getElementById('WPM');
-    const camp = document.getElementById('camp');
-
-    console.log(eighty);
-
-
-    function getRandomQuote() {
-        return fetch(RANDOM_QUOTE_API_URL)
-            .then(response => response.json())
-            .then(data => data.content)
-    }
-
-    function startTimer() {
-        setInterval(update_count, 1000);
-    }
-
-    function update_count() {
-        let minutes = Math.floor(time_ / 60);
-        let seconds = time_ % 60;
-        seconds = seconds < 10 ? '0' + seconds : seconds;
-        timer.innerHTML = `${minutes}:${seconds}`
-            --time_;
-        if (timer.innerText == "0:00") {
-            timer.innerText = "0.00";
-            under_ready.innerText = "Race is Completed";
-            window.location.reload(true);
-            alert("You loss the game!");
-        }
-
-    }
-
-
-    function startTimer10seconds() {
-        setInterval(update_count1, 1000);
-    }
-
-    function update_count1() {
-        let minutes = Math.floor(time_1 / 60);
-        let seconds = time_1 % 60;
-        seconds = seconds < 10 ? '0' + seconds : seconds;
-        timer1.innerHTML = `${minutes}:${seconds}`;
-        console.log(time_1, seconds, timer1.innerText);
-
-        if (seconds == "00") {
-            if (cccc == true) {
-                under_ready.innerText = "";
-                timer1.innerText = "";
-            } else {
-                under_ready.innerText = "Type Something to start race!";
-                timer1.innerText = "";
+onload = function() {
+    // create a network
+    var curr_data;
+    var sz;
+    var container = document.getElementById('mynetwork');
+    var container2 = document.getElementById('mynetwork2');
+    var genNew = document.getElementById('generate-graph');
+    var solve = document.getElementById('solve');
+    var temptext = document.getElementById('temptext');
+    var temptext2 = document.getElementById('temptext2');
+    // initialise graph options
+    var options = {
+        edges: {
+            labelHighlightBold: true,
+            font: {
+                size: 20
             }
-
-        } else {
-
-            --time_1;
-
-            if (time_1 <= 3) {
-                under_ready.innerText = "Just Starting ";
-                under_ready.style.color = "#CCCC00";
-                timer1.style.color = "#CCCC00";
-            }
-
-            if (time_1 <= 1) {
-                under_ready.innerText = "Lets Race ";
-                under_ready.style.color = "red";
-                timer1.style.color = "red";
-            }
-
-
-        }
-    }
-
-    async function renderNewQuote() {
-
-        for (let i = 0; i < 15; i++) {
-            const quote = await getRandomQuote();
-            quote.split('').forEach(character => {
-                const characterSpan = document.createElement('span')
-                characterSpan.innerText = character
-                temp_string += character;
-                // quoteDisplayElement.appendChild(characterSpan)
-            })
-            const characterSpan = document.createElement('span')
-            characterSpan.innerText = " "
-                // quoteDisplayElement.appendChild(characterSpan)
-            quoteInputElement.value = null;
-        }
-
-
-        let quote1 = quoteDisplayElement.querySelectorAll('span');
-        quote1.forEach((characterSpan, index) => {
-            if (characterSpan.innerText == " ") ++total_words;
-
-        });
-        ++total_words;
-        time = quote1.length - pre;
-        let moves_width = 1200 / time;
-        len_of_text = quote1.length;
-        time = total_words;
-        pre = time;
-        WPM.innerText = 0;
-        WPM.style.color = "green";
-        Accuracy.innerText = 0;
-        Accuracy.style.color = "green";
-
-
-
-
-
-    }
-
-    const delay = ms => new Promise(res => setTimeout(res, ms));
-
-
-    function buttons_disabled() {
-        eighty.disabled = true;
-        eighty.style.backgroundColor = "#9900CC";
-        ninety.disabled = true;
-        ninety.style.backgroundColor = "#9900CC";
-
-        fifty.disabled = true;
-        fifty.style.backgroundColor = "#9900CC";
-
-        sixty.disabled = true;
-        sixty.style.backgroundColor = "#9900CC";
-
-        seventy.disabled = true;
-        seventy.style.backgroundColor = "#9900CC";
-
-        hundred.disabled = true;
-        hundred.style.backgroundColor = "#9900CC";
-
-        hundred120.disabled = true;
-        hundred120.style.backgroundColor = "#9900CC";
-
-        hundred150.disabled = true;
-        hundred150.style.backgroundColor = "#9900CC";
-
-    }
-
-
-    //****************************************    choose words baby ***************************** */
-    const yourFunction = async() => {
-        // console.log("Waited 10s", temp_string);
-        timer1.style.color = "green";
-        under_ready.innerText = "Starting the race! ";
-        timer1.innerText = startTimer10seconds();
-        await delay(5000);
-        await delay(5000);
-        quoteInputElement.disabled = false;
-        let len = temp_string.split(" ").length;
-        let ss = temp_string.split(" ");
-        quoteDisplayElement.innerHTML = ''
-        for (let i = 0; i < current_click; i++) {
-            let current = ss[i];
-            console.log(current, i, current.length)
-            for (let j = 0; j < current.length; j++) {
-                const characterSpan = document.createElement('span')
-                characterSpan.innerText = current[j];
-                quoteDisplayElement.appendChild(characterSpan);
-            }
-            if (i != 79) {
-                const characterSpan = document.createElement('span')
-                characterSpan.innerText = " ";
-                quoteDisplayElement.appendChild(characterSpan);
+        },
+        nodes: {
+            font: '12px arial black',
+            scaling: {
+                label: true
+            },
+            shape: 'icon',
+            icon: {
+                face: 'FontAwesome',
+                code: '\uf015',
+                size: 40,
+                color: '#black',
             }
         }
-
-        console.log(len, ss);
     };
+    // initialize your network!
+    var network = new vis.Network(container);
+    network.setOptions(options);
+    var network2 = new vis.Network(container2);
+    network2.setOptions(options);
 
-
-    restart.addEventListener('click', (event) => {
-        window.location.reload(true);
-    });
-    fifty.addEventListener('click', (event) => {
-        current_click = 50;
-        buttons_disabled();
-        yourFunction();
-    });
-    sixty.addEventListener('click', (event) => {
-        current_click = 60;
-        buttons_disabled();
-        yourFunction();
-    });
-    seventy.addEventListener('click', (event) => {
-        current_click = 70;
-        buttons_disabled();
-        yourFunction();
-    });
-    eighty.addEventListener('click', (event) => {
-        current_click = 80;
-        buttons_disabled();
-        yourFunction();
-    });
-    ninety.addEventListener('click', (event) => {
-        current_click = 90;
-        buttons_disabled();
-        yourFunction();
-    });
-    hundred.addEventListener('click', (event) => {
-        current_click = 100;
-        buttons_disabled();
-        yourFunction();
-    });
-    hundred120.addEventListener('click', (event) => {
-        current_click = 120;
-        buttons_disabled();
-        yourFunction();
-    });
-    hundred150.addEventListener('click', (event) => {
-        current_click = 150;
-        buttons_disabled();
-        yourFunction();
-    });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    const createAligned = (scene, count, texture, scrollFactor) => {
-        let x = 0;
-        for (let i = 0; i < count; ++i) {
-            const m = scene.add.image(x, scene.scale.height, texture).
-            setOrigin(0, 1).
-            setScrollFactor(scrollFactor);
-            x += m.width;
+    function createData() {
+        sz = Math.floor(Math.random() * 8) + 3;
+        cities = ['Delhi', 'Mumbai', 'Gujarat', 'Goa', 'Kanpur', 'Jammu', 'Hyderabad', 'Bangalore', 'Gangtok', 'Meghalaya'];
+        let nodes = [];
+        for (let i = 1; i <= sz; i++) {
+            nodes.push({ id: i, label: cities[i - 1] })
         }
+        nodes = new vis.DataSet(nodes);
+
+        let edges = [];
+        for (let i = 2; i <= sz; i++) {
+            let neigh = i - Math.floor(Math.random() * Math.min(i - 1, 3) + 1);
+            edges.push({ type: 0, from: i, to: neigh, color: 'orange', label: String(Math.floor(Math.random() * 70) + 31) });
+        }
+
+        src = 1;
+        dst = sz;
+
+        for (let i = 1; i <= sz / 2;) {
+            let n1 = Math.floor(Math.random() * sz) + 1;
+            let n2 = Math.floor(Math.random() * sz) + 1;
+            if (n1 != n2) {
+                if (n1 < n2) {
+                    let tmp = n1;
+                    n1 = n2;
+                    n2 = tmp;
+                }
+                let works = 0;
+                for (let j = 0; j < edges.length; j++) {
+                    if (edges[j]['from'] === n1 && edges[j]['to'] === n2) {
+                        if (edges[j]['type'] === 0)
+                            works = 1;
+                        else
+                            works = 2;
+                    }
+                }
+
+                if (works <= 1) {
+                    if (works === 0 && i < sz / 4) {
+                        edges.push({
+                            type: 0,
+                            from: n1,
+                            to: n2,
+                            color: 'orange',
+                            label: String(Math.floor(Math.random() * 70) + 31)
+                        });
+                    } else {
+                        edges.push({
+                            type: 1,
+                            from: n1,
+                            to: n2,
+                            color: 'green',
+                            label: String(Math.floor(Math.random() * 50) + 1)
+                        });
+                    }
+                    i++;
+                }
+            }
+        }
+
+        let data = {
+            nodes: nodes,
+            edges: edges
+        };
+        curr_data = data;
     }
 
-    /* ------------------------------------------------------------------------------------*/
-
-
-
-    console.log("Successful task");
-    var config = {
-        type: Phaser.AUTO,
-        scale: {
-            mode: Phaser.Scale.FIT,
-            width: 1200,
-            height: 1000,
-        },
-        backgroundColor: 0xff00cc,
-        parent: 'mynetwork',
-        physics: {
-            default: 'arcade',
-            arcade: {
-                gravity: {
-                    y: 1000,
-                },
-                debug: false,
-            }
-        },
-
-        scene: {
-            preload: preload,
-            create: create,
-            update: update,
-        }
+    genNew.onclick = function() {
+        createData();
+        network.setData(curr_data);
+        temptext2.innerText = 'Find least time path from ' + cities[src - 1] + ' to ' + cities[dst - 1];
+        temptext.style.display = "inline";
+        temptext2.style.display = "inline";
+        container2.style.display = "none";
 
     };
 
-    let game = new Phaser.Game(config);
-    console.log(game);
+    solve.onclick = function() {
+        temptext.style.display = "none";
+        temptext2.style.display = "none";
+        container2.style.display = "inline";
+        network2.setData(solveData(sz));
+    };
 
-    let correct_characters = 0;
-    let correct_words = 0;
-    let temp_len = 0;
+    function dijkstra(graph, sz, src) {
+        let vis = Array(sz).fill(0);
+        let dist = [];
+        for (let i = 1; i <= sz; i++)
+            dist.push([10000, -1]);
+        dist[src][0] = 0;
 
-
-
-
-    quoteInputElement.addEventListener('input', (event) => {
-        // for the timer;
-        if (indd == 0) {
-            timer.innerText = startTimer();
-            timer.style.color = "green";
-            timer1.innerText = "";
-            cccc = true;
-            ++indd;
-
-        }
-
-        const arrayQuote = quoteDisplayElement.querySelectorAll('span');
-        correct_characters = 0;
-        correct_words = 0;
-        temp_len = 0;
-        const arrayValue = quoteInputElement.value.split('');
-        quoteInputElement.style.textDecoration = 'line-through';
-        quoteInputElement.style.textShadow = "5px 5px 10px black";
-
-
-        len_of_text = arrayQuote.length;
-        temp_len = arrayValue.length;
-        let correct = true
-        let first = "",
-            second = "";
-        if (arrayValue.length > now) {
-            now = arrayValue.length;
-            lets_now = Math.floor(1320 / len_of_text);
-            console.log("this is it-> ", lets_now);
-            if (arrayValue[now - 1] == arrayQuote[now - 1].innerText) {
-                if (into_lenght == len_of_text - 5) {
-                    bird.x += (1400 - bird.x);
-                } else {
-                    bird.x += lets_now;
+        for (let i = 0; i < sz - 1; i++) {
+            let mn = -1;
+            for (let j = 0; j < sz; j++) {
+                if (vis[j] === 0) {
+                    if (mn === -1 || dist[j][0] < dist[mn][0])
+                        mn = j;
                 }
-                console.log(bird.xinto_lenght, len_of_text);
+            }
+
+            vis[mn] = 1;
+            for (let j in graph[mn]) {
+                let edge = graph[mn][j];
+                if (vis[edge[0]] === 0 && dist[edge[0]][0] > dist[mn][0] + edge[1]) {
+                    dist[edge[0]][0] = dist[mn][0] + edge[1];
+                    dist[edge[0]][1] = mn;
+                }
             }
         }
 
+        return dist;
+    }
 
-        current_now = arrayValue.length;
+    function solveData(sz) {
+        let data = curr_data;
+        let graph = [];
+        for (let i = 1; i <= sz; i++) {
+            graph.push([]);
+        }
 
-        console.log("---------------------", arrayValue[now - 1], arrayQuote[now - 1].innerText, 1200 / len_of_text, now, arrayValue.length);
+        for (let i = 0; i < data['edges'].length; i++) {
+            let edge = data['edges'][i];
+            if (edge['type'] === 1)
+                continue;
+            graph[edge['to'] - 1].push([edge['from'] - 1, parseInt(edge['label'])]);
+            graph[edge['from'] - 1].push([edge['to'] - 1, parseInt(edge['label'])]);
+        }
 
-        /// loop to array
-        arrayQuote.forEach((characterSpan, index) => {
-                const character = arrayValue[index]
-                if (characterSpan.innerText == " ") {
-                    if (first == second && first != "") correct_words++;
-                    first = "";
-                    second = "";
+        let dist1 = dijkstra(graph, sz, src - 1);
+        let dist2 = dijkstra(graph, sz, dst - 1);
+
+        let mn_dist = dist1[dst - 1][0];
+
+        let plane = 0;
+        let p1 = -1,
+            p2 = -1;
+        for (let pos in data['edges']) {
+            let edge = data['edges'][pos];
+            if (edge['type'] === 1) {
+                let to = edge['to'] - 1;
+                let from = edge['from'] - 1;
+                let wght = parseInt(edge['label']);
+                if (dist1[to][0] + wght + dist2[from][0] < mn_dist) {
+                    plane = wght;
+                    p1 = to;
+                    p2 = from;
+                    mn_dist = dist1[to][0] + wght + dist2[from][0];
                 }
-                if (character == null) {
-                    first += character;
-                    second += characterSpan.innerText;
-                    characterSpan.classList.remove('correct')
-                    characterSpan.classList.remove('incorrect')
-                    correct = false
-
-                } else if (character === characterSpan.innerText) {
-                    characterSpan.classList.add('correct')
-                    correct_characters++;
-                    first += character;
-                    second += characterSpan.innerText;
-                    characterSpan.classList.remove('incorrect')
-                } else {
-                    characterSpan.classList.remove('correct')
-                    characterSpan.classList.add('incorrect')
-                    first += character;
-                    second += characterSpan.innerText;
-                    correct = false
+                if (dist2[to][0] + wght + dist1[from][0] < mn_dist) {
+                    plane = wght;
+                    p2 = to;
+                    p1 = from;
+                    mn_dist = dist2[to][0] + wght + dist1[from][0];
                 }
-
-            })
-            // when correct happens, then no need to backspace fuck update the index of the backspace;
-            //last_correct update this function;
-        let flag = 0;
-        arrayQuote.forEach((characterSpan, index) => {
-            let character = arrayValue[index]
-            if (character == characterSpan.innerText && flag == 0) {
-                if (last_correct <= index) last_correct = index;
-            } else flag = 1;
-
-        });
-
-
-
-
-        let baby = true;
-        into_lenght = 0;
-        let baby1 = true;
-        arrayQuote.forEach((characterSpan, index) => {
-            let character = arrayValue[index]
-            if (index <= current_now - 1) {
-                if (character != characterSpan.innerText) baby = false;
-
             }
+        }
 
-            if (character == characterSpan.innerText && baby1 == true) {
-                into_lenght++;
-                baby1 = false;
-            }
-
-        });
-
-
-
-
-
-
-        if (baby == false) {
-            quoteInputElement.style.background = '#ff6c00';
-            //      quoteInputElement.style.opacity = 10;
+        new_edges = [];
+        if (plane !== 0) {
+            new_edges.push({ arrows: { to: { enabled: true } }, from: p1 + 1, to: p2 + 1, color: 'green', label: String(plane) });
+            new_edges.concat(pushEdges(dist1, p1, false));
+            new_edges.concat(pushEdges(dist2, p2, true));
         } else {
-            quoteInputElement.style.background = '#3cb371';
-            //         quoteInputElement.style.opacity = 0.4;
+            new_edges.concat(pushEdges(dist1, dst - 1, false));
         }
-
-
-        console.log("last-correct-> ", last_correct, len_of_text);
-        if (arrayValue[arrayValue.length - 1] == " ") last_char = -1;
-        else last_char = arrayValue[arrayValue.length - 1];
-        if (first == second) ++correct_words;
-
-
-
-
-
-        if (last_correct == len_of_text - 2) {
-            timer.innerText = "0.00";
-            under_ready.innerText = "Race is Completed";
-            window.location.reload(true);
-
-            alert("You won the game!");
-            ++i;
-            renderNewQuote();
-        }
-    });
-
-
-
-
-
-
-    function preload() {
-
-        // loading all the images in the preload function
-        console.log("In Preload");
-        // JSalert();
-        renderNewQuote();
-        this.load.image("sky", "Assets/sky.png");
-        this.load.image("mountain", "Assets/mountains.png");
-        this.load.image("plateau", "Assets/plateau.png");
-        this.load.image("ground", "Assets/ground.png");
-        this.load.image("plants", "Assets/plant.png");
-        this.load.image("bird", "Assets/bird.png");
-        this.load.image("bird2", "Assets/bird2.png");
-        this.load.image("bird3", "Assets/bird3.png");
-        this.load.image("bird4", "Assets/bird4.png");
-        this.load.image("bird5", "Assets/bird5.png");
-        this.load.image("dot", "Assets/line.png");
-        this.load.image("you", "Assets/you.png");
-        this.load.image("light", "Assets/light.png");
-        this.load.image("one", "Assets/one.png");
-        this.load.image("two", "Assets/two.png");
-        this.load.image("three", "Assets/three.png");
-        this.load.image("four", "Assets/four.png");
-        this.load.image("five", "Assets/five.png");
-        this.load.image("ship", "Assets/manme.png");
-        this.load.image("chidi", "Assets/chidi.png");
-        this.load.image("chidi2", "Assets/chidi2.png");
-
+        data = {
+            nodes: data['nodes'],
+            edges: new_edges
+        };
+        return data;
     }
 
-    //  var speed = 4;
-    // the closer it to the player,  move every thing in the backgrond in the differnet speed,
-    function create() {
-
-        const width = this.scale.width;
-        const height = this.scale.height;
-        console.log(width, height);
-        sky = this.add.image(width * 0.5, height * 0.5, 'sky').setScrollFactor(0);
-        createAligned(this, 100, 'mountain', 0.25)
-        bird = this.add.image(100, 400, 'bird').setScrollFactor(0);
-
-        let x = 0;
-        for (let i = 0; i <= 100; ++i) {
-            track = this.add.image(x, 465, 'dot').setOrigin(0, 1).setScrollFactor(0);
-            x += track.width;
+    function pushEdges(dist, curr, reverse) {
+        tmp_edges = [];
+        while (dist[curr][0] != 0) {
+            let fm = dist[curr][1];
+            if (reverse)
+                new_edges.push({ arrows: { to: { enabled: true } }, from: curr + 1, to: fm + 1, color: 'orange', label: String(dist[curr][0] - dist[fm][0]) });
+            else
+                new_edges.push({ arrows: { to: { enabled: true } }, from: fm + 1, to: curr + 1, color: 'orange', label: String(dist[curr][0] - dist[fm][0]) });
+            curr = fm;
         }
-        light = this.add.image(100, 700, 'light').setScrollFactor(0.2);
-
-
-        createAligned(this, 100, 'plateau', 0.5)
-        createAligned(this, 100, 'ground', 1)
-        createAligned(this, 100, 'plants', 1.25)
-        this.cameras.main.setBounds(0, 0, width * 100, height);
-
-
-
-
-        /*****************************ADDING TEXT   ***********************************************/
-
-
-        // text = this.add.text(1120, 30, "WEM", {
-        //     font: "30px Impact",
-        //     fill: "#black",
-        //     align: "center"
-
-        // }).setScrollFactor(0);
-
-        one = this.add.text(420, 95, "Type GO", {
-            font: "100px Luminari, fantasy",
-            fill: "#DA70D6",
-            align: "center"
-        }).setScrollFactor(0);
-
-        two = this.add.text(360, 200, "Typing Multi-player", {
-            font: "50px Luminari, fantasy",
-            fill: "#DA70D6",
-            align: "center"
-        }).setScrollFactor(0);
-
-        three = this.add.text(280, 200, "The", {
-            font: "50px Luminari, fantasy",
-            fill: "#000000",
-            align: "center"
-        }).setScrollFactor(0);
-
-        four = this.add.text(764, 200, "Game", {
-            font: "50px Luminari, fantasy",
-            fill: "#000000",
-            align: "center"
-        }).setScrollFactor(0);
-
-        five = this.add.text(400, 850, "Time", {
-            font: "50px Luminari, fantasy",
-            fill: "#000000",
-            align: "center"
-        }).setScrollFactor(0);
-        six = this.add.text(510, 850, "to kill the", {
-            font: "50px Luminari, fantasy",
-            fill: "#DA70D6",
-            align: "center"
-        }).setScrollFactor(0);
-
-        seven = this.add.text(710, 850, "keypad", {
-            font: "50px Luminari, fantasy",
-            fill: "#000000",
-            align: "center"
-        }).setScrollFactor(0);
-        ffi = this.add.text(20, 10, "Single", {
-            font: "50px Luminari, fantasy",
-            fill: "#DA70D6",
-            align: "center"
-        }).setScrollFactor(0);
-        ffii = this.add.text(150, 10, "Race", {
-            font: "50px Luminari, fantasy",
-            fill: "#000000",
-            align: "center"
-        }).setScrollFactor(0);
-        chidi = this.add.image(596, 944, 'chidi2').setScrollFactor(0);
-
-        // fuck = this.add.text(150, 430, "fuck", {
-        //     font: "50px Luminari, fantasy",
-        //     fill: "#000000",
-        //     align: "center"
-        // }).setScrollFactor(0);
-
-        chidi = this.add.image(596, 944, 'chidi2').setScrollFactor(0);
-
-
-
-
+        return tmp_edges;
     }
 
-
-
-    function randomNumber(min, max) {
-        return Math.random() * (max - min) + min;
-    }
-
-
-
-
-    function update() {
-        const cam = this.cameras.main;
-        if (timer.innerText >= total_words - 5) {
-            timer.style.color = "red";
-        }
-
-
-
-        WPM.innerText = correct_words;
-
-        if (speed >= 30) speed = 30;
-        if (indd >= 1) {
-            cam.scrollX += speed;
-            speed += 0.2;
-            // console.log("Orignla speed-> ", correct_characters / len_of_text);
-            let cal = ((correct_characters / len_of_text) * 100);
-            let cal1 = cal.toFixed(2);
-            Accuracy.innerText = 100 - space_back;
-
-        }
-
-    }
-
-
-}
+    genNew.click();
+};
